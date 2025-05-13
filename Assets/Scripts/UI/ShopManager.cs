@@ -5,12 +5,15 @@ using Rocket;
 using TMPro;
 using UnityEngine.UI;
 using Game;
+using User_Data;
 
 
 namespace UI
 {
     public class ShopManager : MonoBehaviour
     {
+
+        [SerializeField] private UserData userData;
         
         [Header("Rockets")]
         [Tooltip("Drag all of the rocket data scriptable objects")]
@@ -99,6 +102,8 @@ namespace UI
             if (GameLogic.gameLogic.GetCollectedStar() < rocketData.rocketDataSO.RocketPrice) return;
 
             GameLogic.gameLogic.AddStar(-rocketData.rocketDataSO.RocketPrice);
+
+            UIManager.uiManager.DisplayStar(userData.CollectedStar);
 
             rocketData.rocketDataSO.rocketStatus = RocketStatus.PURCHASED_NOT_EQUİPED;
 

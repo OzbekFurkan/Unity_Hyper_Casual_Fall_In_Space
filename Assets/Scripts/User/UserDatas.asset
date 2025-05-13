@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7be6ca7977474e9aa64143546b4ac02, type: 3}
   m_Name: UserDatas
   m_EditorClassIdentifier: 
-  BestScore: 4
-  CollectedStar: 7
+  BestScore: 0
+  CollectedStar: 0
   AudioVal: 1
   Difficulty: 1

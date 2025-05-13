@@ -138,9 +138,14 @@ namespace UI
             
         }
 
-        public void OnStarCollected(int collectedStar)
+        public void DisplayStar(int collectedStar)
         {
             collectedStarText.text = collectedStar + "";
+        }
+
+        public void OnStarCollected(int collectedStar)
+        {
+            DisplayStar(collectedStar);
 
             starCollectedImage.gameObject.SetActive(true);
 

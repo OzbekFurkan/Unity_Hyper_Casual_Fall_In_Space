@@ -64,6 +64,8 @@ namespace Game
 
             userData.CollectedStar -= 10;
 
+            UIManager.uiManager.DisplayStar(userData.CollectedStar);
+
             bestScoreCelebration.Stop();
 
             gameState = GameState.PLAYING;

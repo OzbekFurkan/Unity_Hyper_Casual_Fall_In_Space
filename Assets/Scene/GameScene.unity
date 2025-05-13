@@ -1711,6 +1711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b2ee93bafb324c1ca77fece571cdb6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userData: {fileID: 11400000, guid: 9fddbc4af23834ea6bf16f4fd33b21fd, type: 2}
   allRockets:
   - {fileID: 11400000, guid: 3946f4afe15c94c0ca3bbb88b7f1918d, type: 2}
   - {fileID: 11400000, guid: 64d46343a71374ddc8b72b506ae0f19d, type: 2}
