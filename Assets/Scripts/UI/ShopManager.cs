@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using Game;
 using User_Data;
+using Zenject;
 
 
 namespace UI
@@ -14,6 +15,8 @@ namespace UI
     {
 
         [SerializeField] private UserData userData;
+        [Inject] GameLogic gameLogic;
+        [Inject] UIManager uiManager;
         
         [Header("Rockets")]
         [Tooltip("Drag all of the rocket data scriptable objects")]
@@ -99,11 +102,11 @@ namespace UI
 
         public void PurchaseRocket()
         {
-            if (GameLogic.gameLogic.GetCollectedStar() < rocketData.rocketDataSO.RocketPrice) return;
+            if (gameLogic.GetCollectedStar() < rocketData.rocketDataSO.RocketPrice) return;
 
-            GameLogic.gameLogic.AddStar(-rocketData.rocketDataSO.RocketPrice);
+            gameLogic.AddStar(-rocketData.rocketDataSO.RocketPrice);
 
-            UIManager.uiManager.DisplayStar(userData.CollectedStar);
+            uiManager.DisplayStar(userData.CollectedStar);
 
             rocketData.rocketDataSO.rocketStatus = RocketStatus.PURCHASED_NOT_EQUİPED;
 

@@ -7,13 +7,14 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using User_Data;
+using Zenject;
 
 namespace UI
 {
     public class UIManager : MonoBehaviour
     {
-        public static UIManager uiManager;
         [SerializeField] UserData userData;
+        [Inject] GameLogic gameLogic;
 
         [Header("Menu Panels")]
         [SerializeField] private GameObject shopAndInventory;
@@ -33,10 +34,6 @@ namespace UI
 
         private void Awake()
         {
-            if (uiManager == null) uiManager = this;
-
-            else Destroy(gameObject);
-
             InitializeUI();
         }
 
@@ -113,7 +110,7 @@ namespace UI
                 else
                     tryAgainButton.DORotate(new Vector3(0, 0, -45), 1f).SetEase(Ease.InOutElastic).SetLoops(-1, LoopType.Yoyo);
 
-                if (userData.BestScore == GameLogic.gameLogic.GetScore())
+                if (userData.BestScore == gameLogic.GetScore())
                     bestScorePanel.DOAnchorPosY(600f, 0.5f).From().SetEase(Ease.InElastic);
             });
             

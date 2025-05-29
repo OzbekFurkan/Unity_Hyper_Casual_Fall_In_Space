@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 namespace Game
 {
     public class PlanetSpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject planetPrefab;
+        [Inject] private GameObject planetPrefab;
+        [Inject] DiContainer diContainer;
         [SerializeField] private GameObject starPrefab;
         [SerializeField] private Transform rocket;
 
@@ -50,6 +52,11 @@ namespace Game
             }
         }
 
+        private void SetPlanetPositionAndRotation(GameObject planet, Vector2 pos, Quaternion rot)
+        {
+            planet.transform.SetPositionAndRotation(pos, rot);
+        }
+
         IEnumerator SpawnPlanets()
         {
             while (true)
@@ -57,10 +64,12 @@ namespace Game
                 yield return new WaitForSeconds(1f);
 
                 float randomY = Random.Range(3, 5);
-                GameObject topPlanet = Instantiate(planetPrefab, new Vector2(rocket.transform.position.x + 10, randomY), rocket.transform.rotation);
-                GameObject bottomPlanet = Instantiate(planetPrefab, new Vector2(Random.Range(rocket.transform.position.x - 1,
-                    rocket.transform.position.x + 1) + 10, Random.Range(randomY - 8, randomY - 7.5f)),
-                    rocket.transform.rotation);
+                GameObject topPlanet = diContainer.InstantiatePrefab(planetPrefab);
+                SetPlanetPositionAndRotation(topPlanet, new Vector2(rocket.transform.position.x + 10, randomY), rocket.transform.rotation);
+                GameObject bottomPlanet = diContainer.InstantiatePrefab(planetPrefab);
+
+                SetPlanetPositionAndRotation(bottomPlanet, new Vector2(Random.Range(rocket.transform.position.x - 1,
+                    rocket.transform.position.x + 1) + 10, Random.Range(randomY - 8, randomY - 7.5f)), rocket.transform.rotation);
 
                 topPlanet.TryGetComponent<PlanetManager>(out PlanetManager TplanetManager);
                 if (TplanetManager != null) TplanetManager.rocket = rocket;

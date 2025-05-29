@@ -4,6 +4,7 @@ using UnityEngine;
 using Rocket;
 using UI;
 using User_Data;
+using Zenject;
 
 
 namespace Game
@@ -12,7 +13,7 @@ namespace Game
 
     public class GameLogic : MonoBehaviour
     {
-        [HideInInspector] public static GameLogic gameLogic;
+        [Inject] UIManager uiManager;
 
         [Header("References")]
         [SerializeField] private RocketData rocketData;
@@ -27,14 +28,6 @@ namespace Game
         [HideInInspector] public GameState gameState=GameState.WAITING;
 
         public static System.Action<GameState> OnGameStateChanged;
-
-
-        private void Awake()
-        {
-            if (gameLogic == null)  gameLogic = this;
-
-            else Destroy(gameObject);
-        }
 
         private void Start()
         {
@@ -64,7 +57,7 @@ namespace Game
 
             userData.CollectedStar -= 10;
 
-            UIManager.uiManager.DisplayStar(userData.CollectedStar);
+            uiManager.DisplayStar(userData.CollectedStar);
 
             bestScoreCelebration.Stop();
 
@@ -114,7 +107,7 @@ namespace Game
         public void AddScore(float value)
         {
             score += value;
-            UIManager.uiManager.OnScored(score);
+            uiManager.OnScored(score);
         }
         public float GetScore() => score;
 
@@ -126,7 +119,7 @@ namespace Game
         private void CollectStar(GameObject hit)
         {
             AddStar(1);
-            UIManager.uiManager.OnStarCollected(userData.CollectedStar);
+            uiManager.OnStarCollected(userData.CollectedStar);
             audioSource.PlayOneShot(starCollectingSound, 0.6f);
             Destroy(hit);
         }
